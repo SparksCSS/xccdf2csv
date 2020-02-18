@@ -29,8 +29,7 @@ def import_xccdf(_xccdf):
 
     groups = benchmark.findall(f"{{{xmlns}}}Group")
     results = benchmark.findall(f"{{{xmlns}}}TestResult")
-    if type(results) == "<class 'list'>":
-        results = results[0]
+    results = results[0]
 
     stigs = {}
     for group in groups:
