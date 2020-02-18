@@ -20,15 +20,15 @@ def import_xccdf(_xccdf):
     xml = ET.parse(_xccdf)
     benchmark = xml.getroot()
     check_list = []
-    profiles = benchmark.findall("{%s}Profile" % xmlns)
+    profiles = benchmark.findall(f"{{{xmlns}}}Profile")
     for profile in profiles:
-        selects = profile.findall("{%s}select" % xmlns)
+        selects = profile.findall(f"{{{xmlns}}}select")
         for select_tag in selects:
             if select_tag.get("selected") == "true":
                 check_list.append(select_tag.get('idref'))
 
-    groups = benchmark.findall("{%s}Group" % xmlns)
-    results = benchmark.findall("{%s}TestResult" % xmlns)
+    groups = benchmark.findall(f"{{{xmlns}}}Group")
+    results = benchmark.findall(f"{{{xmlns}}}TestResult")
     if type(results) == "<class 'list'>":
         results = results[0]
 
@@ -36,12 +36,12 @@ def import_xccdf(_xccdf):
     for group in groups:
         group_id = group.get("id")
         if group_id in check_list:
-            title = group.find("{%s}title" % xmlns).text
-            severity = group.find("{%s}Rule" % xmlns).get("severity")
-            version = group.find("{%s}Rule/{%s}version" % (xmlns, xmlns)).text
-            rule_title = group.find("{%s}Rule/{%s}title" % (xmlns, xmlns)).text
-            desctag = "{%s}Rule/{%s}description" % (xmlns, xmlns)
-            fixtext = group.find("{%s}Rule/{%s}fixtext" % (xmlns, xmlns)).text
+            title = group.find(f"{{{xmlns}}}title").text
+            severity = group.find(f"{{{xmlns}}}Rule").get("severity")
+            version = group.find(f"{{{xmlns}}}Rule/{{{xmlns}}}version").text
+            rule_title = group.find(f"{{{xmlns}}}Rule/{{{xmlns}}}title").text
+            desctag = f"{{{xmlns}}}Rule/{{{xmlns}}}description"
+            fixtext = group.find(f"{{{xmlns}}}Rule/{{{xmlns}}}fixtext").text
             descriptiontext = group.find(desctag).text
             encodedDesc = descriptiontext.replace("&gt;", ">").replace("&lt;", "<").replace("&", "&amp;")
             innerXML = "<desc>%s</desc>" % format(encodedDesc)
