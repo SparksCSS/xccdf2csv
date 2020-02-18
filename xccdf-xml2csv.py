@@ -4,12 +4,12 @@ which can be manipulated as required.
 
 Seeing issues with .Net STIG; recommend try/except to handle error.
 
+Adapted by: Arron Sparks and Tyson Bradley
+
 Adapted from:
 (C) 2010 Adam Crosby
 Licensed under:
 http://creativecommons.org/licenses/by-nc-sa/3.0/
-
-Adapted by: Arron Sparks and Tyson Bradley
 """
 import xml.etree.ElementTree as ET
 
