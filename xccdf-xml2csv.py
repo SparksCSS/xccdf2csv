@@ -55,14 +55,16 @@ def import_xccdf(_xccdf):
                 'Fix Text': fixtext,
             }
 
+    stig_list = []
     for stig in stigs:
         version = stigs[stig]['Version']
         for result in results:
             if 'idref' in result.attrib and 'version' in result.attrib and version in result.attrib['version']:
-                status = result.find(("{%s}result" % xmlns))
+                status = result.find(f"{{{xmlns}}}result")
                 stigs[stig]['Status'] = status.text
-
-    return stigs
+        stigs[stig]['v-id'] = stig
+        stig_list.append(stigs[stig])
+    return stig_list
 
 
 def main():
